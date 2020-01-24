@@ -1,3 +1,4 @@
+    
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,26 +12,25 @@ using System.Security.Claims;
 
 namespace Market.Controllers
 {
-  public class TreatsController : Controller
+  public class FlavorsController : Controller
   {
-
+    
     public ActionResult Index()
     {
-      
       return View();
     }
 
     public ActionResult Create()
     {
-     
+      
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Treat treat)
+    public ActionResult Create(Flavor flavor, int TreatId)
     {
-    
       
+    
       return RedirectToAction("Index");
     }
 
