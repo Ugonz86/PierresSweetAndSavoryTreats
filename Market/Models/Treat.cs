@@ -1,3 +1,4 @@
+  
 using System.Collections.Generic;
 
 namespace Market.Models
@@ -12,9 +13,7 @@ namespace Market.Models
         public int TreatId { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-
-        public ICollection<TreatFlavor> Flavors { get; set; }
-      
-
+        public int Quantity { get; set; }
+        public virtual ICollection<TreatFlavor> Flavors { get; set; }
     }
 }
