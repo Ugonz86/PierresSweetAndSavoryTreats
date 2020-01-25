@@ -8,8 +8,7 @@ namespace Market.Controllers
 {
   public class TreatsController : Controller
   {
-
-      private readonly MarketContext _db;
+    private readonly MarketContext _db;
 
     public TreatsController(MarketContext db)
     {
@@ -19,12 +18,12 @@ namespace Market.Controllers
     public ActionResult Index()
     {
       List<Treat> model = _db.Treats.ToList();
+      
       return View(model);
     }
 
     public ActionResult Create()
     {
-      ViewBag.TreatList = _db.Treats.ToList();
       return View();
     }
 
@@ -38,12 +37,67 @@ namespace Market.Controllers
 
     public ActionResult Details(int id)
     {
-      var thisTreat = _db.Treats
-        .Include(treat => treat.Flavors)
-        .ThenInclude(join => join.Flavor)
-        .FirstOrDefault(treat => treat.TreatId == id);
+        var thisTreat = _db.Treats
+            .Include(treat => treat.Flavors)
+            .ThenInclude(join => join.Flavor)
+            .FirstOrDefault(treat => treat.TreatId == id);
         return View(thisTreat);
     }
+
+    public ActionResult Edit(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Treat treat)
+    {
+      _db.Entry(treat).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Delete(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      _db.Treats.Remove(thisTreat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult DeleteAll()
+    {
+      var allTreats = _db.Treats.ToList();
+      return View();
+    }
+
+    [HttpPost, ActionName("DeleteAll")]
+    public ActionResult DeleteAllConfirmed()
+    {
+      var allTreats = _db.Treats.ToList();
+
+      foreach (var treat in allTreats)
+      {
+      _db.Treats.Remove(treat);
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    // [HttpPost]
+    //  public ActionResult Checkout(Treat treat)
+    //   {
+    //     // List<Treat> model = _db.Treats.ToList();
+    //     int checkOut = treat.Price * Quantity;
+    //     return View(model);
+    //   }
 
   }
 }
