@@ -1,0 +1,30 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Market.Models.Treat;
+
+<h1>Treat Details</h1>
+<br>
+<h3><b>@Html.DisplayFor(model => model.Name)</b></h3>
+<br>
+
+@if(@Model.Flavors.Count == 0)
+{
+  <h3>This treat does not contain any flavors</h3>
+}
+else
+{
+  <h3>Flavors under this treat:</h3>
+  @foreach(var join in Model.Flavors)
+    {
+      <h3><b>@join.Flavor.Description</b></h3>
+      
+    }
+  
+}
+<br>
+<h4>@Html.ActionLink("Add new flavor", "Create", "Flavors")</h4>
+<h4>@Html.ActionLink("Back to treats", "Index")</h4>
+<h4>@Html.ActionLink("Edit Treat", "Edit", new { id = Model.TreatId })</h4>
+<h4>@Html.ActionLink("Delete Treat", "Delete", new { id = Model.TreatId })</h4>

@@ -1,0 +1,27 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Market.Models;
+@model List<Market.Models.Treat>;
+
+<h1>Treats</h1>
+
+<br>
+
+@if (@Model.Count == 0)
+{
+  <h3>No treats have been added yet!</h3>
+} 
+
+@foreach (Treat treat in Model)
+{
+  <h3>@Html.ActionLink($"{treat.Name}, ${treat.Price} each, Quantity: {treat.Quantity}", "Details", new { id = treat.TreatId })</h3>
+  
+}
+<h3>Total: </h3>
+<br>
+<p>@Html.ActionLink("CheckOut", "CheckOut")</p>
+<h4>@Html.ActionLink("Add new treat", "Create")</h4>
+<h4>@Html.ActionLink("Delete All Treats", "DeleteAll")</h4>
+<h4>@Html.ActionLink("Home", "Index", "Home")</h4>

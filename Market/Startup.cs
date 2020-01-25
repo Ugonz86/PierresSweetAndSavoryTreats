@@ -7,8 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Market.Models;
 
-using Microsoft.AspNetCore.Identity;
-
 namespace Market
 {
   public class Startup
@@ -31,11 +29,10 @@ namespace Market
         .AddDbContext<MarketContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
-      //new code
       services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<MarketContext>()
-                .AddDefaultTokenProviders();
-      //
+        .AddEntityFrameworkStores<MarketContext>()
+        .AddDefaultTokenProviders();
+
       services.Configure<IdentityOptions>(options =>
       {
         options.Password.RequireDigit = false;
