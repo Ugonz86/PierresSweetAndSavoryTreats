@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Market.Migrations
 {
     [DbContext(typeof(MarketContext))]
-    [Migration("20200125004057_addIdentity")]
-    partial class addIdentity
+    [Migration("20200128202829_Authorization")]
+    partial class Authorization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

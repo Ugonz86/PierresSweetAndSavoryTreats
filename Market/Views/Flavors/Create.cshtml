@@ -4,11 +4,11 @@
 
 @model Market.Models.Flavor
 
-<h4>Add a new flavor</h4>
-
+<h1>Add a new flavor</h1>
+<br>
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(model => model.Description)
+    @Html.LabelFor(model => model.Description, "Flavor")
     @Html.TextBoxFor(model => model.Description)
 
     @Html.Label("Select treat")
@@ -16,4 +16,5 @@
 
     <input type="submit" value="Add new flavor" />
 }
+<br>
 <h4>@Html.ActionLink("Show all flavors", "Index")</h4>

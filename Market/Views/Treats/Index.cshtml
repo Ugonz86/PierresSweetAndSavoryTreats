@@ -17,11 +17,11 @@
 @foreach (Treat treat in Model)
 {
   <h3>@Html.ActionLink($"{treat.Name}, ${treat.Price} each, Quantity: {treat.Quantity}", "Details", new { id = treat.TreatId })</h3>
-  
+  <h3>Total: </h3>
 }
-<h3>Total: </h3>
 <br>
-<p>@Html.ActionLink("CheckOut", "CheckOut")</p>
+
 <h4>@Html.ActionLink("Add new treat", "Create")</h4>
+<h4>@Html.ActionLink("Check Out", "CheckOut")</h4>
 <h4>@Html.ActionLink("Delete All Treats", "DeleteAll")</h4>
 <h4>@Html.ActionLink("Home", "Index", "Home")</h4>
