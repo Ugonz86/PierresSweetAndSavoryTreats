@@ -3,6 +3,7 @@ using Market.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Market.Controllers
 {
@@ -86,6 +87,25 @@ namespace Market.Controllers
       foreach (var treat in allTreats)
       {
       _db.Treats.Remove(treat);
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddFlavor(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Description");
+      return View(thisTreat);
+    }
+   
+
+    [HttpPost]
+    public ActionResult AddFlavor(Treat treat, int FlavorId)
+    {
+      if (FlavorId != 0)
+      {
+        _db.TreatFlavor.Add(new TreatFlavor() { FlavorId = FlavorId, TreatId = treat.TreatId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");

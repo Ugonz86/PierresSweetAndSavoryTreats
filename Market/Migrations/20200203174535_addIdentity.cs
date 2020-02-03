@@ -48,21 +48,6 @@ namespace Market.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Treats",
-                columns: table => new
-                {
-                    TreatId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treats", x => x.TreatId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -175,24 +160,39 @@ namespace Market.Migrations
                     FlavorId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
-                    TreatId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Flavors", x => x.FlavorId);
                     table.ForeignKey(
-                        name: "FK_Flavors_Treats_TreatId",
-                        column: x => x.TreatId,
-                        principalTable: "Treats",
-                        principalColumn: "TreatId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Flavors_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Treats",
+                columns: table => new
+                {
+                    TreatId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FlavorId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Treats", x => x.TreatId);
+                    table.ForeignKey(
+                        name: "FK_Treats_Flavors_FlavorId",
+                        column: x => x.FlavorId,
+                        principalTable: "Flavors",
+                        principalColumn: "FlavorId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,11 +259,6 @@ namespace Market.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flavors_TreatId",
-                table: "Flavors",
-                column: "TreatId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Flavors_UserId",
                 table: "Flavors",
                 column: "UserId");
@@ -277,6 +272,12 @@ namespace Market.Migrations
                 name: "IX_TreatFlavor_TreatId",
                 table: "TreatFlavor",
                 column: "TreatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Treats_FlavorId",
+                table: "Treats",
+                column: "FlavorId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -303,10 +304,10 @@ namespace Market.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Flavors");
+                name: "Treats");
 
             migrationBuilder.DropTable(
-                name: "Treats");
+                name: "Flavors");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -74,13 +74,9 @@ namespace Market.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("TreatId");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("FlavorId");
-
-                    b.HasIndex("TreatId");
 
                     b.HasIndex("UserId");
 
@@ -92,6 +88,8 @@ namespace Market.Migrations
                     b.Property<int>("TreatId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("FlavorId");
+
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
@@ -99,6 +97,9 @@ namespace Market.Migrations
                     b.Property<int>("Quantity");
 
                     b.HasKey("TreatId");
+
+                    b.HasIndex("FlavorId")
+                        .IsUnique();
 
                     b.ToTable("Treats");
                 });
@@ -230,14 +231,17 @@ namespace Market.Migrations
 
             modelBuilder.Entity("Market.Models.Flavor", b =>
                 {
-                    b.HasOne("Market.Models.Treat", "Treat")
-                        .WithMany()
-                        .HasForeignKey("TreatId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Market.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Market.Models.Treat", b =>
+                {
+                    b.HasOne("Market.Models.Flavor")
+                        .WithOne("Treat")
+                        .HasForeignKey("Market.Models.Treat", "FlavorId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Market.Models.TreatFlavor", b =>

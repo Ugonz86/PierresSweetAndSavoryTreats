@@ -11,6 +11,7 @@ namespace Market.Models
         }
 
         public int TreatId { get; set; }
+        public int FlavorId {get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
